@@ -11,7 +11,6 @@ const { Client, Intents, Constants } = require("discord.js");
 require("dotenv").config();
 const imageSearch = require("image-search-google");
 const imageClient = new imageSearch(process.env.CSEID, process.env.CSEKEY);
-const fs = require("fs");
 const randomItem = (arr) => {
     return arr[Math.floor(Math.random() * arr.length)];
 };
@@ -42,10 +41,8 @@ bot.on("messageCreate", (message) => {
 bot.on("ready", () => {
     console.log(`${bot.user.tag} is logged in`);
     bot.user.setActivity("สวัสดี" + dayOfWeek, { type: "PLAYING" });
-    const guildId = '878989758850822144';
     const guilds = bot.guilds.cache.map(guild => guild.id);
     let commands;
-    console.log(guilds);
     guilds.forEach(guild => {
         var _a;
         commands = guild ? guild.commands : (_a = bot.application) === null || _a === void 0 ? void 0 : _a.commands;

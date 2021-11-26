@@ -58,7 +58,6 @@ bot.on("ready", () => {
 bot.on('interactionCreate', async (interaction) => {
   if (!interaction.isCommand()) return
   const { commandName, options } = interaction
-
   if (commandName === 'flower') {
     let d:Date = new Date()
     let dayOfWeek = searchQ[d.getDay()]
