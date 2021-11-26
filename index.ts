@@ -7,7 +7,7 @@ const randomItem = (arr:any[]) => {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
-const searchQ: string[]  = ["วันอาทิตย์","วันจันทร์","วันอังคาร","วันพุธ","วันพฤหัส","วันศุกร์","วันเสาร๋"]
+const searchQ = ["วันอาทิตย์","วันจันทร์","วันอังคาร","วันพุธ","วันพฤหัส","วันศุกร์","วันเสาร๋"] as const
 
 const bot = new Client({
   intents: [
@@ -27,7 +27,7 @@ bot.on("messageCreate", (message) => {
     let q = "สวัสดี" + dayOfWeek
 
     imageClient.search(q).then((imgs) => {
-      let img = randomItem(imgs).url
+      let img:string = randomItem(imgs).url
       while (
         !(img.endsWith(".png") || img.endsWith("pg") || img.endsWith("webm"))
       ) {
@@ -42,7 +42,6 @@ bot.on("ready", () => {
   console.log(`${bot.user.tag} is logged in`)
   bot.user.setActivity("สวัสดี" + dayOfWeek, { type: "PLAYING" })
 
-  const guildId = '878989758850822144'
   const guilds = bot.guilds.cache.map(guild => guild.id)
   let commands
 
