@@ -2,7 +2,6 @@ const { Client, Intents, Constants } = require("discord.js")
 require("dotenv").config()
 const imageSearch = require("image-search-google")
 const imageClient = new imageSearch(process.env.CSEID, process.env.CSEKEY)
-const fs = require("fs")
 
 const randomItem = (arr:any[]) => {
   return arr[Math.floor(Math.random() * arr.length)]
@@ -44,10 +43,8 @@ bot.on("ready", () => {
   bot.user.setActivity("สวัสดี" + dayOfWeek, { type: "PLAYING" })
 
   const guildId = '878989758850822144'
-  const guilds= bot.guilds.cache.map(guild => guild.id)
+  const guilds = bot.guilds.cache.map(guild => guild.id)
   let commands
-
-  console.log(guilds)
 
   guilds.forEach(guild => {
     commands = guild ? guild.commands : bot.application?.commands
@@ -57,19 +54,6 @@ bot.on("ready", () => {
       description: 'Send beautiful flower pic'
     })
   });
-  
-  // commands?.create({
-  //   name: 'search',
-  //   description: 'Search images',
-  //   options: [
-  //     {
-  //       name: 'string',
-  //       description: 'search query',
-  //       required: true,
-  //       type: Constants.ApplicationCommandOptionTypes.STRING
-  //     }
-  //   ]
-  // })  
 })
 
 bot.on('interactionCreate', async (interaction) => {
@@ -77,9 +61,9 @@ bot.on('interactionCreate', async (interaction) => {
   const { commandName, options } = interaction
 
   if (commandName === 'flower') {
-    let d = new Date()
+    let d:Date = new Date()
     let dayOfWeek = searchQ[d.getDay()]
-    let q = "สวัสดี" + dayOfWeek
+    let q:string = "สวัสดี" + dayOfWeek
     imageClient.search(q).then((imgs) => {
       let img = randomItem(imgs).url
       while (
@@ -93,21 +77,6 @@ bot.on('interactionCreate', async (interaction) => {
       })
     })
   }
-  // else if (commandName === 'search') {
-  //   const q = options.getString('string')
-  //   imageClient.search(q).then((imgs) => {
-  //     let img = randomItem(imgs).url
-  //     while (
-  //       !(img.endsWith(".png") || img.endsWith("pg") || img.endsWith("webm"))
-  //     ) {
-  //       img = randomItem(imgs).url
-  //     }
-  //     interaction.reply({
-  //       content: img,
-  //       ephemeral: false,
-  //     })
-  //   })
-  // }
 })
 
 bot.login(process.env.TOKEN)
